@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多機能オーディオ & MIDI 変換ツール</title>
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+    #dropZone {
+      border: 2px dashed #4CAF50;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+    #dropZone.hover {
+      background-color: #f0f0f0;
+    }
+    textarea {
+      height: 200px;
+      resize: none;
+    }
+    button:disabled {
+      background-color: #cccccc;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold text-center text-gray-700 mb-6">多機能オーディオ & MIDI 変換ツール</h1>
+
+    <div class="mb-6">
+      <h2 class="text-xl text-gray-800">① ファイルを選択</h2>
+      <div class="flex flex-col items-center space-y-4">
+        <input type="file" id="fileUploader" class="py-2 px-4 border rounded-md shadow-md text-gray-700" accept=".mid, audio/midi, audio/*">
+        <p class="text-gray-600">または、下のエリアにファイルをドラッグ＆ドロップ</p>
+        <div id="dropZone" class="cursor-pointer">
+          <span class="text-gray-500">ここにファイルをドラッグ＆ドロップ</span>
+        </div>
+      </div>
+      <div id="message" class="text-green-600 text-center mt-4" style="display: none;">
+        すべての変換がご利用できます
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <h2 class="text-xl text-gray-800">② MIDI → HEX</h2>
+      <textarea id="hexOutput" class="w-full p-4 border rounded-lg" readonly></textarea>
+      <button id="hexDownloadBtn" class="w-full py-2 px-4 bg-blue-500 text-white rounded-md disabled:bg-gray-400" disabled>HEXをTXTで保存</button>
+
+      <hr class="my-6">
+
+      <h2 class="text-xl text-gray-800">③ HEX → MIDI</h2>
+      <textarea id="hexInput" class="w-full p-4 border rounded-lg" placeholder="ここに16進数文字列（スペース・カンマなし）を貼り付けてください"></textarea>
+      <input type="text" id="midiFileName" class="w-full p-2 border rounded-md my-4" placeholder="保存するMIDIファイル名（拡張子不要）" />
+      <button id="midiDownloadBtn" class="w-full py-2 px-4 bg-green-500 text-white rounded-md">MIDIファイルとして保存</button>
+
+      <hr class="my-6">
+
+      <h2 class="text-xl text-gray-800">④ 音声変換</h2>
+      <div class="space-y-4">
+        <button id="convertWavToMp3Btn" class="w-full py-2 px-4 bg-blue-500 text-white rounded-md disabled:bg-gray-400" disabled>WAV → MP3</button>
+        <button id="convertMp3ToOggBtn" class="w-full py-2 px-4 bg-blue-500 text-white rounded-md disabled:bg-gray-400" disabled>MP3 → OGG</button>
+        <button id="convertMp3ToWavBtn" class="w-full py-2 px-4 bg-blue-500 text-white rounded-md disabled:bg-gray-400" disabled>MP3 → WAV</button>
+        <button id="convertOggToMp3Btn" class="w-full py-2 px-4 bg-blue-500 text-white rounded-md disabled:bg-gray-400" disabled>OGG → MP3</button>
+      </div>
+      <audio id="audioPreview" class="w-full mt-4" controls></audio>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code remains the same as before
+  </script>
+
+</body>
+</html>
