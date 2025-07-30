@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Azapon MIDI & Audio 変換ツール</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MIDI & Audio 変換ツール</title>
   <link rel="icon" href="../images/azarasi.png" type="image/png" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body {
       background: linear-gradient(135deg, #001f3f, #005f99);
@@ -17,6 +17,8 @@
       border-radius: 12px;
       box-shadow: 0 0 20px #00c8ff88 inset;
       padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
     }
     h1, h2 {
       color: #00e5ff;
@@ -32,13 +34,27 @@
     button:disabled {
       background-color: #666;
     }
+    .back-link {
+      display: block;
+      margin-top: 2rem;
+      text-align: center;
+      color: #80d8ff;
+      text-decoration: underline;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: text;
+      transition: color 0.3s ease;
+    }
+    .back-link:hover {
+      color: #aef4ff;
+    }
   </style>
 </head>
 <body class="min-h-screen p-6">
 
-  <div class="max-w-4xl mx-auto box">
+  <div class="box">
     <div class="flex items-center space-x-4 mb-4">
-      <img src="../images/azarasi.png" alt="Azapon Icon" class="w-14 h-14 rounded-full border-2 border-cyan-300 shadow-md">
+      <img src="../images/azarasi.png" alt="Azapon Icon" class="w-14 h-14 rounded-full border-2 border-cyan-300 shadow-md" />
       <h1 class="text-3xl font-bold">MIDI & Audio 変換ツール</h1>
     </div>
 
@@ -46,7 +62,7 @@
 
     <div class="mb-6">
       <h2 class="text-xl mb-2">① ファイルを選択 or ドラッグ</h2>
-      <input type="file" id="fileUploader" class="w-full p-2 rounded mb-2" accept=".mid, audio/midi, audio/*">
+      <input type="file" id="fileUploader" class="w-full p-2 rounded mb-2" accept=".mid, audio/midi, audio/*" />
       <div id="dropZone" class="w-full border-2 border-dashed border-cyan-400 rounded p-6 text-center text-cyan-200 hover:bg-cyan-900 cursor-pointer">
         ここにファイルをドラッグ＆ドロップ
       </div>
@@ -62,7 +78,7 @@
     <div class="mb-8">
       <h2 class="text-xl mb-2">③ HEX → MIDI</h2>
       <textarea id="hexInput" class="w-full p-2 rounded" placeholder="スペースやカンマなしで16進数を貼り付けてね"></textarea>
-      <input type="text" id="midiFileName" class="w-full mt-2 p-2 rounded" placeholder="保存ファイル名（拡張子不要）">
+      <input type="text" id="midiFileName" class="w-full mt-2 p-2 rounded" placeholder="保存ファイル名（拡張子不要）" />
       <button id="midiDownloadBtn" class="mt-2 w-full py-2 bg-green-500 text-white rounded">MIDIとして保存</button>
     </div>
 
@@ -78,6 +94,8 @@
     </div>
 
     <p class="text-center italic text-cyan-300 mt-6">「Azaponの魔法で音が自由に形を変える」</p>
+
+    <a href="index.html" class="back-link">← メインページへ戻る</a>
   </div>
 
   <script>
