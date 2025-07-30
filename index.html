@@ -81,8 +81,79 @@
   </div>
 
   <script>
-    // JavaScriptの復旧用コードは別途提供できます
-    // 既存のfileUploader, dropZone, hexInput, hexOutput, ボタン群との連携部分を補完すればOK
+    const fileUploader = document.getElementById('fileUploader');
+    const dropZone = document.getElementById('dropZone');
+    const message = document.getElementById('message');
+    const hexOutput = document.getElementById('hexOutput');
+    const hexDownloadBtn = document.getElementById('hexDownloadBtn');
+    const hexInput = document.getElementById('hexInput');
+    const midiFileName = document.getElementById('midiFileName');
+    const midiDownloadBtn = document.getElementById('midiDownloadBtn');
+
+    function midiToHexString(arrayBuffer) {
+      const bytes = new Uint8Array(arrayBuffer);
+      return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function hexStringToMidiBlob(hexString) {
+      const byteArray = hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+      return new Blob([new Uint8Array(byteArray)], { type: 'audio/midi' });
+    }
+
+    function handleFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const hex = midiToHexString(e.target.result);
+        hexOutput.value = hex;
+        hexDownloadBtn.disabled = false;
+        message.classList.remove('hidden');
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('bg-cyan-800');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('bg-cyan-800');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('bg-cyan-800');
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
+
+    fileUploader.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) handleFile(file);
+    });
+
+    hexDownloadBtn.addEventListener('click', () => {
+      const blob = new Blob([hexOutput.value], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'midi_hex.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    midiDownloadBtn.addEventListener('click', () => {
+      const hex = hexInput.value.trim();
+      if (!hex) return;
+      const blob = hexStringToMidiBlob(hex);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const name = midiFileName.value.trim() || 'converted';
+      a.href = url;
+      a.download = name + '.mid';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
   </script>
 </body>
 </html>
